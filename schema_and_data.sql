@@ -1,15 +1,18 @@
+DROP DATABASE IF EXISTS Company_Management_System;
+CREATE DATABASE Company_Management_System;
+USE Company_Management_System;
 -- 1. DATABASE SETUP
 CREATE DATABASE IF NOT EXISTS Company_Management_System;
 USE Company_Management_System;
 
 -- 2. TABLES
-CREATE TABLE departments (
-    dept_id INT PRIMARY KEY AUTO_INCREMENT,
-    dept_name VARCHAR(50) NOT NULL,
-    location VARCHAR(50)
+CREATE TABLE IF NOT EXISTS departments (
+     dept_id INT PRIMARY KEY AUTO_INCREMENT,
+     dept_name VARCHAR(50) NOT NULL,
+     location VARCHAR(50) 
 );
 
-CREATE TABLE employees (
+CREATE TABLE IF NOT exists employees (
     emp_id INT PRIMARY KEY AUTO_INCREMENT,
     emp_name VARCHAR(50) NOT NULL,
     salary FLOAT,
@@ -18,7 +21,7 @@ CREATE TABLE employees (
 );
 
 -- Professional addition: An Audit Table
-CREATE TABLE salary_history (
+CREATE TABLE  IF NOT EXISTS salary_history (
     log_id INT PRIMARY KEY AUTO_INCREMENT,
     emp_id INT,
     old_salary FLOAT,
@@ -27,11 +30,10 @@ CREATE TABLE salary_history (
 );
 
 -- 3. VIEWS
-CREATE VIEW employee_dept_summary AS
+CREATE OR REPLACE VIEW employee_dept_summary AS
 SELECT e.emp_name, e.salary, d.dept_name, d.location
 FROM employees e
 JOIN departments d ON e.dept_id = d.dept_id;
-
 -- 4. PROCEDURES
 DELIMITER //
 CREATE PROCEDURE AddNewEmployee(IN p_name VARCHAR(50), IN p_salary FLOAT, IN p_dept_id INT)
